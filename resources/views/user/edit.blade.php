@@ -2,6 +2,26 @@
  
 
 @section('content')
+
+<!doctype html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+ 
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+<body>
+<!-- <div class="dropdown">
+  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+    Dropdown button
+  </button>
+  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+    <li><a class="dropdown-item" href="#">Action</a></li>
+    <li><a class="dropdown-item" href="#">Another action</a></li>
+    <li><a class="dropdown-item" href="#">Something else here</a></li>
+  </ul>
+</div> -->
 <!--バリデーションの結果表示-->
     <div class="row">
         <div class="col-md-10">
@@ -22,7 +42,7 @@
                         <div class="form-group">
                         <div class="card-body">
                         <label for="charaname">使用キャラ
-                        <select required name="charaname"class="uk-select" id="charaname" style="padding-left: 30px;" onchange="changeChara('my')">
+                        <select required name="charaname"class="uk-select" id="charaname" style="padding-left: 30px;" >
                         @if(empty($user->charaname)) 
                         <option value="" selected   hidden>選択してください</option>
                         @endif
@@ -124,13 +144,13 @@
                         <label for="denychara[]">拒否キャラ</label>
 
                         @foreach ($characters as $character_key => $character_val)
-                        <div class="form-check">
+                        <div class="custom-control custom-checkbox">
                         @if (mb_strpos( $user->denychara ,$character_key) === false )
-                        <label class="form-check-label" for="{{ $character_key }}">
-                        <input name="denychara[]" type="checkbox" value="{{ $character_key }}" id="{{ $character_key }}">
+                        <label class="custom-control-label" for="{{ $character_key }}">
+                        <input name="denychara[]" type="checkbox" value="{{ $character_key }}" id="{{ $character_key }}" class="custom-control-input">
                         @else
-                        <label class="form-check-label" for="{{ $character_key }}">
-                        <input name="denychara[]" type="checkbox" value="{{ $character_key }}"  id="{{ $character_key }}" checked >
+                        <label class="custom-control-label" for="{{ $character_key }}">
+                        <input name="denychara[]" type="checkbox" value="{{ $character_key }}"  id="{{ $character_key }}"class="custom-control-input" checked >
                         @endif
                         {{$character_val}}</label>
                         </div>
@@ -251,14 +271,14 @@
                            <div class="card-body">
                            <label for="denyrate[]">対戦拒否闘力帯</label>
                            @foreach ($rates as $rate_key => $rate_val)
-                            <div class="form-check">
+                            <div class="custom-control custom-checkbox">
                                 <!-- もしもuserdenyrateの数字が含まれていたら -->
                             @if (mb_strpos( $user->denyrate ,$rate_key) === false )
-                            <label class="form-check-label" for="{{ $rate_key}}">
-                            <input name="denyrate[]" type="checkbox" value="{{ $rate_key }}" id ="{{ $rate_key}}">
+                            <label class="custom-control-label" for="{{ $rate_key}}">
+                            <input name="denyrate[]" type="checkbox" value="{{ $rate_key }}" id ="{{ $rate_key}}"  class="custom-control-input">
                             @else
-                            <label class="form-check-label" for="{{ $rate_key}}">
-                            <input name="denyrate[]" type="checkbox" value="{{ $rate_key }}" checked id ="{{ $rate_key}}">
+                            <label class="custom-control-label" for="{{ $rate_key}}">
+                            <input name="denyrate[]" type="checkbox" value="{{ $rate_key }}" checked id ="{{ $rate_key}}"  class="custom-control-input">
                             @endif
                             {{$rate_val}}</label>
                             </div>
@@ -292,6 +312,7 @@
             </div>
         </div>
     </div>
+
 @stop
 
 @section('css')
@@ -299,3 +320,5 @@
 
 @section('js')
 @stop
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+</body>
