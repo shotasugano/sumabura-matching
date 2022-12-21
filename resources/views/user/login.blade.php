@@ -19,7 +19,7 @@
     <div class="alert alert-danger">{{ session('error')}}</div>
 @endif
           <div class="login_form_top">
-            <h1>スマブラマッチングシステム</h1>
+            <h4>スマブラマッチングシステム</h4>
           </div>
           <div class="form-group">
             <p>メールアドレス</p>

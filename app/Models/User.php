@@ -25,9 +25,11 @@ class User extends Authenticatable
         'denychara',
         'rate',
         'denyrate',
+        'role',
         'path',
         'address',
         'playdate',
+
     ];
 
     /**

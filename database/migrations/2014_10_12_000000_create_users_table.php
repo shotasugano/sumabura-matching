@@ -24,6 +24,7 @@ class CreateUsersTable extends Migration
             $table->string('denychara')->nullable();
             $table->string('rate')->nullable();
             $table->string('denyrate')->nullable();
+            $table->integer('role')->nullable();
             $table->string('path')->nullable();
             $table->string('address')->nullable();
             $table->string('playdate')->nullable();

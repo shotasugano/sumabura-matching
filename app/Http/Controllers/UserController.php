@@ -18,11 +18,12 @@ class UserController extends Controller
         */
     public function login(Request $request)
     { 
-        //もしAuthを保持しているようであれば強制的にhome画面へ遷移する
+        //もしAuthを保持しているようであれば強制的にstatus画面へ遷移する
         if(Auth::check()){
-            ///home画面へ遷移
+            ///status画面へ遷移
             return redirect('/statuses');
         }
+
         return view('user.login');
     }
     /**
@@ -56,6 +57,7 @@ class UserController extends Controller
                 'name' => $request->name,
                 'email' => $request->email,
                 'password' => Hash::make($request->password),
+                'role' => 5,
             ]);
 
         return redirect('/');
@@ -115,7 +117,12 @@ class UserController extends Controller
         */
         public function index(Request $request)
         {
-        
+            $check =User::where('id',Auth::id())->select('role')->first();
+         
+            if($check['role'] == 1){
+                ///status画面へ遷移
+                return view('user.dummy');
+            }
             //検索をした場合名前からあいまい検索をしてくれる
             $namekeyword = $request->input('keyword');
             $charakeyword = $request->input('charaname');
@@ -139,6 +146,7 @@ class UserController extends Controller
              //userが拒否するもの以外のユーザー一覧を取得する
              $users = $query->whereNOTIn('charaname', $denycharas)
                      ->whereNOTIN('rate',$denyrates)
+                     ->where('id','!=',Auth::id())
                      ->get();
 
                      $characters =[
@@ -169,7 +177,7 @@ class UserController extends Controller
                         '125'=>'ミュウツー',
                         '126'=>'ロイ',
                         '127'=>'クロム',
-                        '128'=>'Mr.ゲーム&amp;ウォッチ',
+                        '128'=>'Mr.ゲーム&ウォッチ',
                         '129'=>'メタナイト',
                         '130'=>'ピット・ブラックピット',
                         '131'=>'ゼロスーツサムス',
@@ -181,7 +189,7 @@ class UserController extends Controller
                         '137'=>'リュカ',
                         '1038'=>'ソニック',
                         '139'=>'デデデ',
-                        '140'=>'ピクミン&amp;オリマー' ,
+                        '140'=>'ピクミン&オリマー' ,
                         '141'=>'ルカリオ',
                         '142'=>'ロボット',
                         '143'=>'トゥーンリンク',
@@ -189,7 +197,7 @@ class UserController extends Controller
                         '145'=>'むらびと',
                         '146'=>'ロックマン',
                         '147'=>'Wii Fit トレーナー',
-                        '148'=>'ロゼッタ&amp;チコ' ,
+                        '148'=>'ロゼッタ&チコ' ,
                         '149'=>'リトル・マック',
                         '150'=>'ゲッコウガ',
                         '151'=>'格闘Mii',
@@ -215,7 +223,7 @@ class UserController extends Controller
                         '171'=>'パックンフラワー',
                         '172'=>'ジョーカー',
                         '173'=>'勇者',
-                        '174'=>'バンジョー&amp;カズーイ',
+                        '174'=>'バンジョー&カズーイ',
                         '175'=>'テリー',
                         '176'=>'ベレト／ベレス',
                         '177'=>'ミェンミェン',
@@ -250,6 +258,13 @@ class UserController extends Controller
      */
     public function edit(Request $request)
     { if ($request->isMethod('post')) {
+        $this->validate($request, [
+            'denychara'=> 'array|max:50',
+        ],
+
+    [
+        'denychara.max' => '最大の拒否キャラは５０キャラまでです',
+    ]);
         // 申請DBへ商品登録
         if(!empty($request->denychara)){
         $requestdenychara = implode(',', $request->denychara);
@@ -262,13 +277,7 @@ class UserController extends Controller
         $requestdenyrate =NULL;
          };
 
-    //      $this->validate($request->denychara, [
-    //         'denychara'=> 'max:4000',
-    //     ],
 
-    // [
-    //     'denychara.max' => '最大の拒否キャラは５０キャラまでです',
-    // ]);
  User::where('id',Auth::id())
             ->update([
                 'charaname'=> $request->charaname,
@@ -310,7 +319,7 @@ class UserController extends Controller
                         '125'=>'ミュウツー',
                         '126'=>'ロイ',
                         '127'=>'クロム',
-                        '128'=>'Mr.ゲーム&amp;ウォッチ',
+                        '128'=>'Mr.ゲーム&ウォッチ',
                         '129'=>'メタナイト',
                         '130'=>'ピット・ブラックピット',
                         '131'=>'ゼロスーツサムス',
@@ -322,7 +331,7 @@ class UserController extends Controller
                         '137'=>'リュカ',
                         '138'=>'ソニック',
                         '139'=>'デデデ',
-                        '140'=>'ピクミン&amp;オリマー' ,
+                        '140'=>'ピクミン&オリマー' ,
                         '141'=>'ルカリオ',
                         '142'=>'ロボット',
                         '143'=>'トゥーンリンク',
@@ -330,7 +339,7 @@ class UserController extends Controller
                         '145'=>'むらびと',
                         '146'=>'ロックマン',
                         '147'=>'Wii Fit トレーナー',
-                        '148'=>'ロゼッタ&amp;チコ' ,
+                        '148'=>'ロゼッタ&チコ' ,
                         '149'=>'リトル・マック',
                         '150'=>'ゲッコウガ',
                         '151'=>'格闘Mii',
@@ -356,7 +365,7 @@ class UserController extends Controller
                         '171'=>'パックンフラワー',
                         '172'=>'ジョーカー',
                         '173'=>'勇者',
-                        '174'=>'バンジョー&amp;カズーイ',
+                        '174'=>'バンジョー&カズーイ',
                         '175'=>'テリー',
                         '176'=>'ベレト／ベレス',
                         '177'=>'ミェンミェン',
@@ -393,5 +402,22 @@ class UserController extends Controller
         { 
             return view('user.instruction');
         }
+    /**
+        * 退会画面へ遷移
+        *
+        * @param Request $request
+        */
+        public function withdrawal(Request $request)
+        { 
+            if ($request->isMethod('post')) {
+            User::where('id',Auth::id())
+            ->update([
+                'role'=> 1,
+            ]);
 
+            return view('user.dummy');
+        }
+
+            return view('user.withdrawal');
+        }
 }

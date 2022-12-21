@@ -55,10 +55,11 @@
                                      {{ Auth::user()->name }}
                                 </button>
                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                        <li><a class="dropdown-item" href="/instruction">このサイトの使い方</a></li>
+                                        <li><a class="dropdown-item" href="/statuses">ホーム画面</a></li>
                                         <li><a class="dropdown-item" href="/edit">プロフィール編集</a></li>
                                         <li><a class="dropdown-item" href="{{ route('logout') }}">ログアウトする</a></li>
-                                        <li><a class="dropdown-item" href="#">退会する</a></li>
+                                        <li><a class="dropdown-item" href="/instruction">このサイトの使い方(Youtubeへ移行します)</a></li>
+                                        <li><a class="dropdown-item" href="withdrawal">退会する</a></li>
                                     </ul>
                             </div>
                         </li>

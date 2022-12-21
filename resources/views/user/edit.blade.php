@@ -42,7 +42,7 @@
                         <div class="form-group">
                         <div class="card-body">
                         <label for="charaname">使用キャラ
-                        <select required name="charaname"class="uk-select" id="charaname" style="padding-left: 30px;" >
+                        <select required name="charaname" id="charaname" style="padding-left: 30px;" class="form-select" aria-label="Default select example">
                         @if(empty($user->charaname)) 
                         <option value="" selected   hidden>選択してください</option>
                         @endif
@@ -141,7 +141,7 @@
 
                         <div class="form-group">
                         <div class="card-body">
-                        <label for="denychara[]">拒否キャラ</label>
+                        <p>拒否キャラ(50キャラが上限です)<p>
 
                         @foreach ($characters as $character_key => $character_val)
                         <div class="custom-control custom-checkbox">
@@ -241,19 +241,21 @@
                          </div>
                         
                         <div class="form-group">
-                            <label for="rate">戦闘力</label>
-                            <select required name="rate" class="uk-select" id="rate" style="padding-left: 30px;" onchange="changeChara('my')">
-                            @if(empty($user->rate)) 
-                             <option value="" selected   hidden>選択してください</option>
-                            @endif
-                             @foreach ($rates as $rate_key => $rate_val)
-                              @if ($user->rate == $rate_key)
-                           <option value="{{ $rate_key}}" selected>{{ $rate_val}}</option>
-                              @else
-                              <option value="{{ $rate_key}}" >{{ $rate_val}}</option>
-                              @endif
-                              @endforeach
-                              </label>
+                              <div class="card-body">
+                                    <label for="rate">戦闘力</label>
+                                    <select required name="rate"  id="rate" style="padding-left: 30px;"  class="form-select" aria-label="Default select example">
+                                    @if(empty($user->rate)) 
+                                    <option value="" selected   hidden>選択してください</option>
+                                    @endif
+                                    @foreach ($rates as $rate_key => $rate_val)
+                                    @if ($user->rate == $rate_key)
+                                    <option value="{{ $rate_key}}" selected>{{ $rate_val}}</option>
+                                    @else
+                                    <option value="{{ $rate_key}}" >{{ $rate_val}}</option>
+                                    @endif
+                                    @endforeach
+                                    </label>
+
                             <!-- <option value="2001">未VIP発射台～VIPに向けた発射台</option>
                             <option value="2002">未VIP修行ゾーン（下）～VIPまであと2-3勝</option>
                             <option value="2003">VIP到達～魔境まであと2-3勝</option>
@@ -264,12 +266,13 @@
                             <option value="2008">地元最強</option>
                             <option value="2009">宇宙最強</option>
                             <option value="2010">神</option> -->
-                        </select>
+                                    </select>
+                            </div>
                         </div>
 
                         <div class="form-group">
                            <div class="card-body">
-                           <label for="denyrate[]">対戦拒否闘力帯</label>
+                           <p>対戦拒否闘力帯<p>
                            @foreach ($rates as $rate_key => $rate_val)
                             <div class="custom-control custom-checkbox">
                                 <!-- もしもuserdenyrateの数字が含まれていたら -->
@@ -300,7 +303,7 @@
                         <div class="form-group">
                             <label for="name">プレイする時間帯</label>
                             <input type="text" class="form-control" id="playdate" name="playdate" placeholder="土日の21:30～等" 
-                            @if(!empty($user->playdate)) value="{{$user->playdate}}" 
+                            @if(!empty($user->playdate)) value="{{ old('playdate',$user->playdate) }}" 
                             @endif
                              required>
                         </div>
