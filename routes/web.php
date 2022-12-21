@@ -26,4 +26,4 @@ Route::get('/edit', [App\Http\Controllers\UserController::class, 'edit'])->name(
 Route::post('/edit', [App\Http\Controllers\UserController::class, 'edit'])->name('edit');
 Route::get('/instruction', [App\Http\Controllers\UserController::class, 'instruction']);
 Route::get('/withdrawal', [App\Http\Controllers\UserController::class, 'withdrawal']);
-Route::POST('/withdrawal', [App\Http\Controllers\UserController::class, 'withdrawal']);
+Route::post('/withdrawal', [App\Http\Controllers\UserController::class, 'withdrawal']);
