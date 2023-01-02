@@ -15,10 +15,9 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
+            $table->string('twitter_id')->nullable();
+            $table->string('access_token')->nullable();
             $table->string('name');
-            $table->string('email')->charset("utf8")->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
             $table->rememberToken();
             $table->string('charaname')->nullable();
             $table->string('denychara')->nullable();

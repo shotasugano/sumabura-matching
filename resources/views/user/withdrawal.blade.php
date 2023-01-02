@@ -18,10 +18,10 @@
 <form method="POST" >
 @csrf
     <div class="card-body">
-    <p>退会するとサイト主にDMしない限り復活出来なくなります。よろしいでしょうか。</p>
+    <p>退会するとサイト主にDMしない限りご利用できなくなります。よろしいでしょうか。</p>
     </div>
     <div class="card-footer">
-        <button type="submit" class="btn btn-primary">退会する</button>
+        <button type="submit" class="btn btn-warning">退会する</button>
         <a class="btn btn-primary" href="/statuses">退会しない</a>
     </div>
     </form>

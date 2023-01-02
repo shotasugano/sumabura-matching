@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Laravel\Socialite\Facades\Socialite;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,7 +15,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 //全()が可能なルート
+Route::get('/login/twitter',[App\Http\Controllers\UserController::class, 'redirectToProvider'])->name('twitter.login');
 
+Route::get('/login/twitter/callback', [App\Http\Controllers\UserController::class, 'handleProviderCallback']);
 Route::get('/account/registmove', [App\Http\Controllers\UserController::class, 'registmove'])->name('registmove');
 Route::get('/', [App\Http\Controllers\UserController::class, 'login'])->name('login');
 Route::post('/account/regist', [App\Http\Controllers\UserController::class, 'regist'])->name('regist');

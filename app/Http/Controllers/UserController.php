@@ -3,13 +3,50 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 use App\Models\User;
 
 class UserController extends Controller
-{
+{    /**
+    * Twitterを使用したログイン画面への遷移
+    *
+    * @param Request $request
+    * @return Response
+    */
+    public function redirectToProvider() {
+        return Socialite::driver('twitter')->redirect();
+    }
+   /**
+    * Twitterを使用したログインボタン後の処理（コールバック）
+    *
+    * @param Request $request
+    * @return Response
+    */
+    public function handleProviderCallback() {
+        try {
+            $twitterUser=Socialite::with('twitter')->user();
+        }catch (Exception $e) {
+            return redirect('login/twitter');
+        }
+ 
+        $user=User::where('twitter_id', $twitterUser->id)->first();
+ 
+        if($user) {
+            $user->name = $twitterUser->name;
+            $user->update();
+        }else {
+            $user=New User();
+            $user->twitter_id = $twitterUser->id;
+            $user->name = $twitterUser->name;
+            $user->save();
+        }
+ 
+        Auth::login($user);
+        return redirect()->to('/statuses');
+    }
     /**
         * ログイン
         *
@@ -38,63 +75,63 @@ class UserController extends Controller
             
         }
     /**
-        * usersDBへ情報を登録後ログイン画面へ遷移
-        *
-        * @param Request $request
-        * @return Response
-        */
-        public function regist(Request $request)
-        {
-            $this->validate($request, [
-                'name' => 'required|max:255',
-                'email' => ' required|email|unique:users',    
-                'password' => 'required|max:32 |confirmed',
-                'password_confirmation'=> 'required|max:32',
-            ]);
+         * usersDBへ情報を登録後ログイン画面へ遷移
+         *
+         * @param Request $request
+         * @return Response
+         */
+    //     public function regist(Request $request)
+    //     {
+    //         $this->validate($request, [
+    //             'name' => 'required|max:255',
+    //             'email' => ' required|email|unique:users',    
+    //             'password' => 'required|max:32 |confirmed',
+    //             'password_confirmation'=> 'required|max:32',
+    //         ]);
  
-            // usersDBへ登録
-            User::create([
-                'name' => $request->name,
-                'email' => $request->email,
-                'password' => Hash::make($request->password),
-                'role' => 5,
-            ]);
+    //         // usersDBへ登録
+    //         User::create([
+    //             'name' => $request->name,
+    //             'email' => $request->email,
+    //             'password' => Hash::make($request->password),
+            
+    //         ]);
 
-        return redirect('/');
-    }
+    //     return redirect('/');
+    // }
     /**
         * ログインの判定を行う
         *
         * @param Request $request
         * @return Response
         */
-        public function find(Request $request)
-        {
+        // public function find(Request $request)
+        // {
             //もしAuthを保持しているようであれば強制的にログアウトするTODO
           //  if(Auth::check()){
           //  return redirect('/home');
           //  }
 
-             $credentials = $request->validate([
-                'email' => ['required'],
-                'password' => ['required'],
-            ]);
+            //  $credentials = $request->validate([
+            //     'email' => ['required'],
+            //     'password' => ['required'],
+            // ]);
      
             // 入力された値がuserDBにあるか、Authで確認し、trueの場合、
-            if (Auth::attempt($credentials)) {
-                $request->session()->regenerate();
+            // if (Auth::attempt($credentials)) {
+            //     $request->session()->regenerate();
     
-                return redirect('/statuses');
-            }else{
+            //     return redirect('/statuses');
+            // }else{
             //異なる場合
            // session()->flash('erorr','メールアドレス、もしくはパスワードに誤りがあります');
          // return redirect()->back();
-            return back()->with([
-            'error'=>'メールアドレス、もしくはパスワードに誤りがあります',
-            'email' => $request->email,
-            ]);}
+        //     return back()->with([
+        //     'error'=>'メールアドレス、もしくはパスワードに誤りがあります',
+        //     'email' => $request->email,
+        //     ]);}
     
-        }
+        // }
         /**
  * ユーザーをアプリケーションからログアウトさせる
  *
@@ -120,7 +157,7 @@ class UserController extends Controller
             $check =User::where('id',Auth::id())->select('role')->first();
          
             if($check['role'] == 1){
-                ///status画面へ遷移
+                ///dummy画面へ遷移
                 return view('user.dummy');
             }
             //検索をした場合名前からあいまい検索をしてくれる

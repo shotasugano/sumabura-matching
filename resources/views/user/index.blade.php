@@ -44,16 +44,18 @@
         </form>
         </div>
         <form class="form-inline my-2 my-lg-0 ml-2" action="{{url('/statuses')}}" method="GET">
-        <input type="submit" value="検索のリセット" class="btn btn-info">
+        <input type="submit" value="検索のリセット" class="btn btn-secondary">
         </form>
         <!-- 登録画面への遷移-->
         <table border="" class="table table-striped task-table" >
             <!-- テーブルヘッダ -->
             <thead>
-                <th>名前</th>
-                <th>使用キャラクター</th>
-                <th>戦闘力帯</th>
-                <th>プレイする時間帯<th>
+                <tr>
+                <th >名前</th>
+                <th >使用キャラ</th>
+                <th >戦闘力帯</th>
+                <th >遊ぶ時間帯<th>
+                </tr>
             </thead>
  
             <!-- テーブル本体 -->
@@ -61,27 +63,27 @@
                 @foreach ($users as $user)
                 <tr>
                     <!-- 登録者名 -->
-                    <td class="table-text">
+                    <td class="table-text col-md-2" >
                         <div>{{ $user->name }}</div>
                     </td>
                     <!-- 使用キャラ-->
-                    <td class="table-text">
+                    <td class="table-text col-md-2" >
                         <div>{{ $characters[$user->charaname] }}</div>
                     </td>
                     <!-- レート-->
-                    <td class="table-text">
+                    <td class="table-text col-md-2" >
                     <div>{{ $rates[$user->rate] }}</div>
                     </td>
-                    <td class="table-text">
+                    <td class="table-text col-md-3" >
                     <div>{{ $user->playdate }}</div>
                     </td>
                     <!-- 証拠画像
                     <td class="table-text">
                     <div><img src="{{ asset($user->path) }}"></div>
                     </td> -->
-                    <td>
+                    <td class="table-text col-md-3">
                         <!-- TODO: 編集ボタン -->
-                        <a href="/edit/{{$user->id}}">>>申し込み</a>
+                        <div><a href="https://twitter.com/intent/user?user_id={{ $user->twitter_id }}">>>twitterを覗く</a></div>
                     </td>
                 </tr>
                 @endforeach

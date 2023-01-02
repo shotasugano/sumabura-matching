@@ -19,33 +19,15 @@
     <div class="alert alert-danger">{{ session('error')}}</div>
 @endif
           <div class="login_form_top">
-            <h4>スマブラマッチングシステム</h4>
+            <h1>スマブラマッチングシステム</h1>
           </div>
-          <div class="form-group">
-            <p>メールアドレス</p>
-            @if($errors->has('email'))
-			@foreach($errors->get('email') as $message)
-      <div class="text-danger">{{ $message }}</div>
-			@endforeach
-      @endif 
-          <input type="email" name="email" placeholder="メールアドレスを入力してください" class="form-control" 
-          @if (session()->has('email')) 
-          value="{{ session('email')}}" 
-          @else value="{{ old('email') }}"
-          @endif ><br>
-          </div>
-
-          <div class="form-group">
-            <p>パスワード</p>
-            @if($errors->has('password'))
-			@foreach($errors->get('password') as $message)
-      <div class="text-danger">{{ $message }}</div>
-			@endforeach
-      @endif 
-            <input type="password" name="password" placeholder="パスワードを入力してください" class="form-control">
-          </div>
-          <button type="submit" class="btn btn-primary">ログイン</button>
-  </form>
-        <a href="/account/registmove" >新規登録</a>
-</div>  
+<h3>スマブラでキャラ対策がしたい方のためのマッチングアプリです</h3>
+<p class="mt-2">
+ <a href="#" class="btn btn-primary">利用規約</a>
+ ご利用前に閲覧ください(youtubeへ遷移します)
+</p>
+<p class="mt-2">
+ <a href="{{route('twitter.login')}}" class="btn btn-primary">Twitterで登録orログインする</a>
+</p>
+</div>
 </body>
