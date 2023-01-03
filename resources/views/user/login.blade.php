@@ -23,7 +23,7 @@
           </div>
 <h3>スマブラでキャラ対策がしたい方のためのマッチングアプリです</h3>
 <p class="mt-2">
- <a href="#" class="btn btn-primary">利用規約</a>
+ <a href="https://www.youtube.com/watch?v=C1oWQAxbAWk" class="btn btn-primary">利用規約</a>
  ご利用前に閲覧ください(youtubeへ遷移します)
 </p>
 <p class="mt-2">

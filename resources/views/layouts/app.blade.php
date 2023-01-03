@@ -58,7 +58,7 @@
                                         <li><a class="dropdown-item" href="/statuses">ホーム画面</a></li>
                                         <li><a class="dropdown-item" href="/edit">プロフィール編集</a></li>
                                         <li><a class="dropdown-item" href="{{ route('logout') }}">ログアウトする</a></li>
-                                        <li><a class="dropdown-item" href="/instruction">このサイトの使い方(Youtubeへ移行します)</a></li>
+                                        <li><a class="dropdown-item" href="https://www.youtube.com/watch?v=C1oWQAxbAWk">このサイトの使い方(Youtubeへ移行します)</a></li>
                                         <li><a class="dropdown-item" href="withdrawal">退会する</a></li>
                                     </ul>
                             </div>
