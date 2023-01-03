@@ -41,7 +41,6 @@ class UserController extends Controller
             $user=New User();
             $user->twitter_id = $twitterUser->id;
             $user->name = $twitterUser->name;
-            $user->role = 0;
             $user->save();
         }
  
@@ -185,7 +184,7 @@ class UserController extends Controller
              $users = $query->whereNOTIn('charaname', $denycharas)
                      ->whereNOTIN('rate',$denyrates)
                      ->where('id','!=',Auth::id())
-                     ->where('role','=',0)
+                     ->where('role','=',NULL)
                      ->get();
 
                      $characters =[
