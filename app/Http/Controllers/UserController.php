@@ -184,7 +184,7 @@ class UserController extends Controller
              $users = $query->whereNOTIn('charaname', $denycharas)
                      ->whereNOTIN('rate',$denyrates)
                      ->where('id','!=',Auth::id())
-                     ->where('role','!=',1)
+                     ->where('role','=',NULL)
                      ->get();
 
                      $characters =[
